@@ -1,3 +1,4 @@
+package BinarySearchTree;
 public class EmptyTreeException extends Exception {
 	static final long serialVersionUID = 1;
 

@@ -1,3 +1,4 @@
+package BinarySearchTree;
 
 public class Pel {
 	private Location p;

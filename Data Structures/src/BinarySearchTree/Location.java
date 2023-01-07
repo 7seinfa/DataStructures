@@ -1,3 +1,4 @@
+package BinarySearchTree;
 
 public class Location {
 	private int x, y;

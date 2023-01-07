@@ -1,3 +1,4 @@
+package BinarySearchTree;
 public class DuplicatedKeyException extends Exception {
 	static final long serialVersionUID = 1;
 
