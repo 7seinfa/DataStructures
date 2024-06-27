@@ -1,0 +1,241 @@
+import java.io.*;
+
+public class WesternCipher {
+
+    private CircularArrayQueue<Character> encodingQueue;
+    private CircularArrayQueue<Character> decodingQueue;
+
+    public WesternCipher() {
+        this.encodingQueue = new CircularArrayQueue<Character>(10);
+        this.decodingQueue = new CircularArrayQueue<Character>(10);
+    }
+
+    public WesternCipher(int capacity) {
+        this.encodingQueue = new CircularArrayQueue<Character>(capacity);
+        this.decodingQueue = new CircularArrayQueue<Character>(capacity);
+    }
+
+    public String encode(String input) {
+        // enqueue all chars
+        for (char c : input.toCharArray()) {
+            this.encodingQueue.enqueue(c);
+        }
+
+        String result = "";
+        boolean is_prev_num = false;
+        char lastChar = 0;
+        // dequeue char one by one and encode
+        for (int i = 0; i < input.length(); i++) {
+            char c = this.encodingQueue.dequeue();
+            // if char is a white space, continue
+            if (c == ' ') {
+                result += c;
+            }
+            // previous char is a number
+            else if (!is_prev_num) {
+                char convertedC = this.convertByTable(c, 1);
+                // current char can be converted to number
+                if (convertedC != 0) {
+                    result += convertedC;
+                    lastChar = convertedC;
+                    is_prev_num = true;
+                }
+                // current char cannot be converted to number
+                else {
+                    c = this.shift(c, 5);
+                    c = this.shift(c, i * 2);
+                    result += c;
+                    lastChar = c;
+                    is_prev_num = false;
+                }
+            }
+            // previous char is not a number
+            else {
+                char convertedC = this.convertByTable(c, 2);
+                // current char can be converted to number
+                if (convertedC != 0) {
+                    result += convertedC;
+                    lastChar = convertedC;
+                    is_prev_num = true;
+                }
+                // current char cannot be converted to number
+                else {
+                    c = this.shift(c, 5);
+                    c = this.shift(c, i * 2);
+                    c = this.shift(c, -2 * (lastChar - '0'));
+                    result += c;
+                    lastChar = c;
+                    is_prev_num = false;
+                }
+            }
+        }
+        return result;
+    }
+
+    public String decode(String input) {
+        // enqueue all chars
+        for (char c : input.toCharArray()) {
+            this.decodingQueue.enqueue(c);
+        }
+
+        String result = "";
+        boolean is_prev_num = false;
+        char lastChar = 0;
+        // dequeue char one by one and decode
+        for (int i = 0; i < input.length(); i++) {
+            // if char is a white space, continue
+            char c = this.decodingQueue.dequeue();
+            if (c == ' ') {
+                result += c;
+            }
+            // previous char is a number
+            else if (!is_prev_num) {
+                char convertedC = this.revertByTable(c, 1);
+                // current char has been converted to number
+                if (convertedC != 0) {
+                    result += convertedC;
+                    is_prev_num = true;
+                }
+                // current char has not been converted to number
+                else {
+                    c = this.shift(c, -5);
+                    c = this.shift(c, -(i * 2));
+                    result += c;
+                    is_prev_num = false;
+                }
+            }
+            // previous char is not a number
+            else {
+                char convertedC = this.revertByTable(c, 2);
+                // current char can be converted to number
+                if (convertedC != 0) {
+                    result += convertedC;
+                    is_prev_num = true;
+                }
+                // current char cannot be converted to number
+                else {
+                    char shiftedC = this.shift(c, -5);
+                    shiftedC = this.shift(shiftedC, -(i * 2));
+                    shiftedC = this.shift(shiftedC, 2 * (lastChar - '0'));
+                    result += shiftedC;
+                    is_prev_num = false;
+                }
+            }
+            lastChar = c;
+        }
+        return result;
+    }
+
+    private char convertByTable(char input, int tableNumber) {
+        Character[] characters = {'A', 'E', 'I', 'O', 'U', 'Y'};
+        Character[] numbers1 = {'1', '2', '3', '4', '5', '6'};
+        Character[] numbers2 = {'3', '4', '5', '6', '1', '2'};
+
+        boolean is_found = false;
+        char result = 0;
+        // find the input char in the list, and return the corresponding encoding
+        for (int i = 0; !is_found && i < characters.length; i++) {
+            if (input == characters[i] && tableNumber == 1) {
+                result = numbers1[i];
+                is_found = true;
+            }
+            if (input == characters[i] && tableNumber == 2) {
+                result = numbers2[i];
+                is_found = true;
+            }
+        }
+        return result;
+    }
+
+    private char revertByTable(char input, int tableNumber) {
+        Character[] characters = {'A', 'E', 'I', 'O', 'U', 'Y'};
+        Character[] numbers1 = {'1', '2', '3', '4', '5', '6'};
+        Character[] numbers2 = {'3', '4', '5', '6', '1', '2'};
+
+        boolean is_found = false;
+        char result = 0;
+        // find the input char in the list, and return the corresponding decoding
+        for (int i = 0; !is_found && i < characters.length; i++) {
+            if (input == numbers1[i] && tableNumber == 1) {
+                result = characters[i];
+                is_found = true;
+            }
+            if (input == numbers2[i] && tableNumber == 2) {
+                result = characters[i];
+                is_found = true;
+            }
+        }
+        return result;
+    }
+
+    private char shift(char input, int offset) {
+        char[] characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+        boolean is_found = false;
+        char result = 0;
+        // find the index of the letter and shift the letter by offset
+        for (int i = 0; !is_found && i < characters.length; i++) {
+            if (input == characters[i]) {
+                is_found = true;
+                result = characters[(i + offset + characters.length) % characters.length];
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) throws IOException {
+        WesternCipher wc = new WesternCipher();
+        InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+        boolean should_continue = true;
+        while (should_continue) {
+            // iterate until received a valid input
+            int choice = -1;
+            while (choice == -1) {
+                try {
+                    System.out.println("Please select: 1. encode 2. decode");
+                    choice = Integer.parseInt(bufferedReader.readLine());
+                    if (choice > 2 || choice < 1) {
+                        choice = -1;
+                        throw new Exception();
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+            // encode if choice is 1
+            if (choice == 1) {
+                System.out.println("Please enter the plaintext:");
+                String input = bufferedReader.readLine();
+                System.out.println("The plaintext is:");
+                System.out.println(input);
+                System.out.println("The ciphertext is:");
+                System.out.println(wc.encode(input));
+            }
+            // otherwise decode
+            else {
+                System.out.println("Please enter the ciphertext:");
+                String input = bufferedReader.readLine();
+                System.out.println("The ciphertext is:");
+                System.out.println(input);
+                System.out.println("The plaintext is:");
+                System.out.println(wc.decode(input));
+            }
+
+            // iterate until received a valid input
+            choice = -1;
+            while (choice == -1) {
+                try {
+                    System.out.println("Enter another string? 1. yes 2. no");
+                    choice = Integer.parseInt(bufferedReader.readLine());
+                    if (choice > 2 || choice < 1) {
+                        choice = -1;
+                        throw new Exception();
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+            should_continue = choice == 1;
+        }
+        System.out.println("Thank you");
+    }
+}

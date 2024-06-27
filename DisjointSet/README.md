@@ -1,0 +1,1 @@
+This project includes a disjoint set, and using this disjointset, takes in an ASCII image of a specific format, and checks for connections and builds using disjoint set functions like union.

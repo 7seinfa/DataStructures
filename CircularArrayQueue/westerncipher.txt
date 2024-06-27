@@ -1,0 +1,548 @@
+import java.io.*;
+
+public class WesternCipher {
+    private CircularArrayQueue<Character> encodingQueue;
+    private CircularArrayQueue<Character> decodingQueue;
+
+    public WesternCipher(){
+        encodingQueue = new CircularArrayQueue<Character>(10);
+        decodingQueue = new CircularArrayQueue<Character>(10);
+
+    }
+    public WesternCipher(int integer){
+        encodingQueue = new CircularArrayQueue<Character>(integer);
+        decodingQueue = new CircularArrayQueue<Character>(integer);
+    }
+
+    public String encode(String input) {
+        char[] message = input.toCharArray();
+        String encoded = "";
+        Character[] letters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+        CircularArrayQueue<Character> letterqueue = new CircularArrayQueue<Character>();
+
+        for (int j = 0; j < message.length; j++) {
+            encodingQueue.enqueue(message[j]);
+        }
+        for (int k = 0; k < letters.length; k++) {
+            letterqueue.enqueue(letters[k]);
+        }
+
+        //while(!messagequeue.isEmpty()) {
+        //char character = messagequeue.dequeue();
+        int lastnumber;
+        int i = 0;
+        while (i < message.length) {
+            if (message[i] != ' ') {
+                if (message[i] == 'A') {
+                    encoded += '1';
+                    lastnumber=1;
+                    if(i+1 != message.length) {
+                        if (message[i+1] != ' '){
+                            if (message[i + 1] == 'A') {
+                                encoded += '3';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'E') {
+                                encoded += '4';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'I') {
+                                encoded += '5';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'O') {
+                                encoded += '6';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'U') {
+                                encoded += '1';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'Y') {
+                                encoded += '2';
+                                i++;
+                            }
+                            else {
+                                i++;
+                                encoded += (char) ((int) input.charAt(i) + 5 + (i*2) - (2*lastnumber));
+                            }
+                        }
+                    }
+                    i++;
+                }
+
+                else if (message[i] == 'E') {
+                    encoded += '2';
+                    lastnumber=2;
+                    if(i+1 != message.length) {
+                        if (message[i+1] != ' '){
+                            if (message[i + 1] == 'A') {
+                                encoded += '3';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'E') {
+                                encoded += '4';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'I') {
+                                encoded += '5';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'O') {
+                                encoded += '6';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'U') {
+                                encoded += '1';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'Y') {
+                                encoded += '2';
+                                i++;
+                            }
+                            else {
+                                i++;
+                                encoded += (char) ((int) input.charAt(i) + 5 + (i*2) - (2*lastnumber));
+                            }
+                        }
+                    }
+                    i++;
+
+                }
+
+                else if (message[i] == 'I') {
+                    encoded += '3';
+                    lastnumber=3;
+                    if(i+1 != message.length) {
+                        if (message[i+1] != ' '){
+                            if (message[i + 1] == 'A') {
+                                encoded += '3';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'E') {
+                                encoded += '4';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'I') {
+                                encoded += '5';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'O') {
+                                encoded += '6';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'U') {
+                                encoded += '1';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'Y') {
+                                encoded += '2';
+                                i++;
+                            }
+                            else {
+                                i++;
+                                encoded += (char) ((int) input.charAt(i) + 5 + (i*2) - (2*lastnumber));
+                            }
+                        }
+                    }
+                    i++;
+
+                }
+
+                else if (message[i] == 'O') {
+                    encoded += '4';
+                    lastnumber=4;
+                    if(i+1 != message.length) {
+                        if (message[i+1] != ' '){
+                            if (message[i + 1] == 'A') {
+                                encoded += '3';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'E') {
+                                encoded += '4';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'I') {
+                                encoded += '5';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'O') {
+                                encoded += '6';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'U') {
+                                encoded += '1';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'Y') {
+                                encoded += '2';
+                                i++;
+                            }
+                            else {
+                                i++;
+                                encoded += (char) ((int) input.charAt(i) + 5 + (i*2) - (2*lastnumber));
+                            }
+                        }
+                    }
+                    i++;
+
+                }
+
+                else if (message[i] == 'U') {
+                    System.out.println("U");
+                    encoded += '5';
+                    lastnumber=5;
+                    if(i+1 != message.length) {
+                        if (message[i+1] != ' '){
+                            if (message[i + 1] == 'A') {
+                                encoded += '3';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'E') {
+                                encoded += '4';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'I') {
+                                encoded += '5';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'O') {
+                                encoded += '6';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'U') {
+                                encoded += '1';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'Y') {
+                                encoded += '2';
+                                i++;
+                            }
+                            else {
+                                i++;
+                                encoded += (char) ((int) input.charAt(i) + 5 + (i*2) - (2*lastnumber));
+                            }
+                        }
+                    }
+                    i++;
+
+                }
+
+                else if (message[i] == 'Y') {
+                    encoded += '6';
+                    lastnumber=6;
+                    if(i+1 != message.length) {
+                        if (message[i+1] != ' '){
+                            if (message[i + 1] == 'A') {
+                                encoded += '3';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'E') {
+                                encoded += '4';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'I') {
+                                encoded += '5';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'O') {
+                                encoded += '6';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'U') {
+                                encoded += '1';
+                                i++;
+                            }
+                            else if (message[i + 1] == 'Y') {
+                                encoded += '2';
+                                i++;
+                            }
+                            else {
+                                i++;
+                                encoded += (char) ((int) input.charAt(i) + 5 + (i*2) - (2*lastnumber));
+                            }
+                        }
+                    }
+                    i++;
+                }
+                else {
+                    encoded += (char) ((int) input.charAt(i) + 5 + (i*2));
+                    i++;
+                }
+            }
+            else {
+                i++;
+                encoded += ' ';
+            }
+        }
+        return encoded;
+    }
+
+    public String decode(String input){
+        String decoded = "";
+        return decoded;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+import java.io.*;
+
+public class WesternCipher {
+    private CircularArrayQueue<Character> encodingQueue;
+    private CircularArrayQueue<Character> decodingQueue;
+    public WesternCipher() {
+        this.encodingQueue = new CircularArrayQueue<Character>(10);
+        this.decodingQueue = new CircularArrayQueue<Character>(10);
+    }
+
+    public WesternCipher(int integer) {
+        this.encodingQueue = new CircularArrayQueue<Character>(integer);
+        this.decodingQueue = new CircularArrayQueue<Character>(integer);
+    }
+
+    public String encode(String input) {
+        String encoded = "";
+
+        char[] message = input.toCharArray();
+
+        for (int j = 0; j < message.length; j++) {
+            encodingQueue.enqueue(message[j]);
+        }
+        boolean islastnum = false;
+        char last = 0;
+//============================
+        for (int i = 0; i < message.length; i++) {
+            char character = this.encodingQueue.dequeue();
+            // if char is a white space, continue
+            if (character == ' ') {
+                encoded += ' ';
+            }
+            // previous char is a number
+            else if (islastnum==false) {
+                char convertedC = this.convert(character, 1);
+                // current char can be converted to number
+                if (convertedC != 0) {
+                    encoded += convertedC;
+                    last = convertedC;
+                    islastnum = true;
+                }
+                // current char cannot be converted to number
+                else {
+                    character = this.shifter(character, 5);
+                    character = this.shifter(character, i * 2);
+                    encoded += character;
+                    last = character;
+                    islastnum = false;
+                }
+            }
+            // previous char is not a number
+            else {
+                char convertedC = this.convert(character, 2);
+                // current char can be converted to number
+                if (convertedC != 0) {
+                    encoded += convertedC;
+                    last = convertedC;
+                    islastnum = true;
+                }
+                // current char cannot be converted to number
+                else {
+                    character = this.shifter(character, 5);
+                    character = this.shifter(character, i * 2);
+                    character = this.shifter(character, -2 * (last - '0'));
+                    encoded += character;
+                    last = character;
+                    islastnum = false;
+                }
+            }
+        }
+        return encoded;
+    }
+
+    public String decode(String input) {
+        // enqueue all chars
+        for (char c : input.toCharArray()) {
+            this.decodingQueue.enqueue(c);
+        }
+
+        String result = "";
+        boolean is_prev_num = false;
+        char lastChar = 0;
+        // dequeue char one by one and decode
+        for (int i = 0; i < input.length(); i++) {
+            // if char is a white space, continue
+            char c = this.decodingQueue.dequeue();
+            if (c == ' ') {
+                result += c;
+            }
+            // previous char is a number
+            else if (!is_prev_num) {
+                char convertedC = this.unconvert(c, 1);
+                // current char has been converted to number
+                if (convertedC != 0) {
+                    result += convertedC;
+                    is_prev_num = true;
+                }
+                // current char has not been converted to number
+                else {
+                    c = this.shifter(c, -5);
+                    c = this.shifter(c, -(i * 2));
+                    result += c;
+                    is_prev_num = false;
+                }
+            }
+            // previous char is not a number
+            else {
+                char convertedC = this.unconvert(c, 2);
+                // current char can be converted to number
+                if (convertedC != 0) {
+                    result += convertedC;
+                    is_prev_num = true;
+                }
+                // current char cannot be converted to number
+                else {
+                    char shiftedC = this.shifter(c, -5);
+                    shiftedC = this.shifter(shiftedC, -(i * 2));
+                    shiftedC = this.shifter(shiftedC, 2 * (lastChar - '0'));
+                    result += shiftedC;
+                    is_prev_num = false;
+                }
+            }
+            lastChar = c;
+        }
+        return result;
+    }
+
+    private char convert(char input, int t) {
+        boolean charfound = false;
+        char output = 'n';
+
+        Character[] c = {'A','E','I','O','U','Y'};
+
+        Character[] n1 = {'1','2','3','4','5','6'};
+
+        Character[] n2 = {'3','4','5','6','1','2'};
+
+        for (int i=0;i<c.length;i++) {
+            if (charfound==false) {
+                if (t==1 && input==c[i]) {
+                    output = n1[i];
+                    charfound = true;
+                }
+                if (t==2 &&input==c[i]) {
+                    output = n2[i];
+                    charfound = true;
+                }
+            }
+        }
+        return output;
+    }
+
+    private char unconvert(char input, int t) {
+        boolean charfound = false;
+        char output = 'n';
+
+        Character[] c = {'A','E','I','O','U','Y'};
+
+        Character[] n1 = {'1','2','3','4','5','6'};
+
+        Character[] n2 = {'3','4','5','6','1','2'};
+
+        for (int i=0;i<c.length;i++) {
+            if (charfound==false) {
+                if (t==1 && input==n1[i]) {
+                    output = c[i];
+                    charfound = true;
+                }
+                if (t==2 &&input==n2[i]) {
+                    output = c[i];
+                    charfound = true;
+                }
+            }
+        }
+        return output;
+    }
+
+    private char shifter(char input, int shiftby) {
+        boolean charfound = false;
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        char[] chararray = (alphabet.toUpperCase()).toCharArray();
+        char output = 'n';
+        for (int i=0;i<chararray.length;i++) {
+            if (charfound==false) {
+                if (input == chararray[i]) {
+                    output = chararray[(i+chararray.length+shiftby)% chararray.length];
+                    charfound = true;
+                }
+            }
+        }
+        return output;
+    }
+
+    public static void main(String[] args) throws IOException {
+        WesternCipher wc = new WesternCipher();
+        InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+        boolean should_continue = true;
+        while (should_continue) {
+            // iterate until received a valid input
+            int choice = -1;
+            while (choice == -1) {
+                try {
+                    System.out.println("Please select: 1. encode 2. decode");
+                    choice = Integer.parseInt(bufferedReader.readLine());
+                    if (choice > 2 || choice < 1) {
+                        choice = -1;
+                        throw new Exception();
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+            // encode if choice is 1
+            if (choice == 1) {
+                System.out.println("Please enter the plaintext:");
+                String input = bufferedReader.readLine();
+                System.out.println("The plaintext is:");
+                System.out.println(input);
+                System.out.println("The ciphertext is:");
+                System.out.println(wc.encode(input));
+            }
+            // otherwise decode
+            else {
+                System.out.println("Please enter the ciphertext:");
+                String input = bufferedReader.readLine();
+                System.out.println("The ciphertext is:");
+                System.out.println(input);
+                System.out.println("The plaintext is:");
+                System.out.println(wc.decode(input));
+            }
+
+            // iterate until received a valid input
+            choice = -1;
+            while (choice == -1) {
+                try {
+                    System.out.println("Enter another string? 1. yes 2. no");
+                    choice = Integer.parseInt(bufferedReader.readLine());
+                    if (choice > 2 || choice < 1) {
+                        choice = -1;
+                        throw new Exception();
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+            should_continue = choice == 1;
+        }
+        System.out.println("Thank you");
+    }
+}
+
+
