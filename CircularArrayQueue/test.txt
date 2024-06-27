@@ -1,0 +1,302 @@
+        CircularArrayQueue<Character> letterqueue = new CircularArrayQueue<Character>();
+        CircularArrayQueue<Character> encodingQueue = new CircularArrayQueue<Character>();
+
+        for (int j = 0; j < message.length; j++) {
+            encodingQueue.enqueue(message[j]);
+        }
+        for (int k = 0; k < letters.length; k++) {
+            letterqueue.enqueue(letters[k]);
+        }
+
+        while(!encodingQueue.isEmpty()) {
+        int lastnumber;
+        int i = 0;
+        System.out.println("initial i is " +i);
+        System.out.println("queue size is " + encodingQueue.size());
+        while(i < encodingQueue.size()) {
+            System.out.println(i);
+            char value = encodingQueue.dequeue();
+            if (value != ' ') {
+                if (value == 'A') {
+                    System.out.println("added A");
+                    encoded += '1';
+                    lastnumber = 1;
+                    if (encodingQueue.first()!=null && encodingQueue.first()!= ' ') {
+                            if (encodingQueue.first() == 'A') {
+                                encoded += '3';
+                                encodingQueue.dequeue();
+                                i++;
+                            }
+                            else if (encodingQueue.first() == 'E') {
+                                encoded += '4';
+                                encodingQueue.dequeue();
+                                i++;
+                            }
+                            else if (encodingQueue.first() == 'I') {
+                                encoded += '5';
+                                encodingQueue.dequeue();
+                                i++;
+                            }
+                            else if (encodingQueue.first() == 'O') {
+                                encoded += '6';
+                                encodingQueue.dequeue();
+                                i++;
+                            }
+                            else if (encodingQueue.first() == 'U') {
+                                encoded += '1';
+                                encodingQueue.dequeue();
+                                i++;
+                            }
+                            else if (encodingQueue.first() == 'Y') {
+                                encoded += '2';
+                                encodingQueue.dequeue();
+                                i++;
+                            }
+                            else {
+                                i++;
+                                encoded += (char) ((i * 2) + (int) encodingQueue.dequeue() + 5 - (2 * lastnumber));
+                            }
+                    }
+                    i++;
+                }
+                else if (value == 'E') {
+                    System.out.println("added E");
+
+                    encoded += '2';
+                    lastnumber = 2;
+                    if (encodingQueue.first()!=null && encodingQueue.first()!= ' ') {
+                        if (encodingQueue.first() == 'A') {
+                            encoded += '3';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'E') {
+                            encoded += '4';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'I') {
+                            encoded += '5';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'O') {
+                            encoded += '6';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'U') {
+                            encoded += '1';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'Y') {
+                            encoded += '2';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else {
+                            i++;
+                            encoded += (char) ((i * 2) + (int) encodingQueue.dequeue() + 5 - (2 * lastnumber));
+                        }
+                    }
+                    i++;
+                }
+                else if (value == 'I') {
+                    System.out.println("added I");
+
+                    encoded += '3';
+                    lastnumber = 3;
+                    if (encodingQueue.first()!=null && encodingQueue.first()!= ' ') {
+                        if (encodingQueue.first() == 'A') {
+                            encoded += '3';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'E') {
+                            encoded += '4';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'I') {
+                            encoded += '5';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'O') {
+                            encoded += '6';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'U') {
+                            encoded += '1';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'Y') {
+                            encoded += '2';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else {
+                            i++;
+                            encoded += (char) ((i * 2) + (int) encodingQueue.dequeue() + 5 - (2 * lastnumber));
+                        }
+                    }
+                    i++;
+                }
+                else if (value == 'O') {
+                    System.out.println("added O");
+
+                    encoded += '4';
+                    lastnumber = 4;
+                    if (encodingQueue.first()!=null && encodingQueue.first()!= ' ') {
+                        if (encodingQueue.first() == 'A') {
+                            encoded += '3';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'E') {
+                            encoded += '4';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'I') {
+                            encoded += '5';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'O') {
+                            encoded += '6';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'U') {
+                            encoded += '1';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'Y') {
+                            encoded += '2';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else {
+                            i++;
+                            encoded += (char) ((i * 2) + (int) encodingQueue.dequeue() + 5 - (2 * lastnumber));
+                        }
+                    }
+                    i++;
+                }
+                else if (value == 'U') {
+                    System.out.println("added U");
+
+                    encoded += '5';
+                    lastnumber = 5;
+                    if (encodingQueue.first()!=null && encodingQueue.first()!= ' ') {
+                        if (encodingQueue.first() == 'A') {
+                            encoded += '3';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'E') {
+                            encoded += '4';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'I') {
+                            encoded += '5';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'O') {
+                            encoded += '6';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'U') {
+                            encoded += '1';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'Y') {
+                            encoded += '2';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else {
+                            i++;
+                            encoded += (char) ((i * 2) + (int) encodingQueue.dequeue() + 5 - (2 * lastnumber));
+                        }
+                    }
+                    i++;
+                }
+                else if (value == 'Y') {
+                    System.out.println("added Y");
+
+                    encoded += '6';
+                    lastnumber = 6;
+                    if (encodingQueue.first()!=null && encodingQueue.first()!= ' ') {
+                        if (encodingQueue.first() == 'A') {
+                            encoded += '3';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'E') {
+                            encoded += '4';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'I') {
+                            encoded += '5';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'O') {
+                            encoded += '6';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'U') {
+                            encoded += '1';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else if (encodingQueue.first() == 'Y') {
+                            encoded += '2';
+                            encodingQueue.dequeue();
+                            i++;
+                        }
+                        else {
+                            i++;
+                            encoded += (char) ((i * 2) + (int) encodingQueue.dequeue() + 5 - (2 * lastnumber));
+                        }
+                    }
+                    i++;
+                }
+                else {
+                    encoded += (char) ((int) input.charAt(i) + 5 + (i*2));
+                    if (i==4){
+                        i=5;
+                        System.out.println("i is " + i);
+                    }
+                    else{
+                        i++;
+                    }
+                    System.out.println("incremented i, which is "+i);
+                }
+            }
+            else {
+                i++;
+                encoded += ' ';
+            }
+        }
+    }
+        return encoded;
+    }
+
+    public String decode(String input){
+        String decoded = "";
+        return decoded;
+    }
+}

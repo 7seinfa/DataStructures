@@ -1,0 +1,3 @@
+This project includes an ArrayStack as well as an algorithm for path finding between a block (represented in the "game" by cupid) and another (represented in the game by a target), and this controls cupid's arrow. Each move for the arrow across the map is stored in the stack, and it pops when it needs to backtrack. The moves follow a very specific algorithm which was outlined by the professor.
+
+The files I made are ArrayStack.java and StartSearch.java, while the rest were made by the professor.

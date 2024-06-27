@@ -1,0 +1,250 @@
+public class CircularArrayQueue<T> implements QueueADT<T> {
+
+    private int front;
+    private int rear;
+    private int count;
+    private T[] queue;
+    final private int DEFAULT_CAPACITY = 20;
+
+    public CircularArrayQueue() {
+        this.front = 1;
+        this.rear = this.DEFAULT_CAPACITY;
+        this.count = 0;
+        this.queue = (T[]) new Object[this.DEFAULT_CAPACITY];
+    }
+
+    public CircularArrayQueue(int capacity) {
+        this.front = 1;
+        this.rear = capacity;
+        this.count = 0;
+        this.queue = (T[]) new Object[capacity];
+    }
+
+    @Override
+    public void enqueue(T element) {
+        if (this.count >= this.queue.length) {
+            this.expandCapacity();
+        }
+        boolean is_enqueued = false;
+        // iterate through the queue to find and insert to the first empty position, starting from this.front
+        for (int i = this.front; !is_enqueued && i < this.queue.length + this.front; i++) {
+            int index = (i - 1) % this.queue.length;
+            if (this.queue[index] == null) {
+                this.queue[index] = element;
+                this.count += 1;
+                this.rear = (this.front + this.count - 1) % this.queue.length;
+                is_enqueued = true;
+            }
+        }
+    }
+
+    @Override
+    public T dequeue() {
+        T element = this.first();
+        this.queue[this.front - 1] = null;
+        this.front = this.front % this.queue.length + 1;
+        this.count -= 1;
+        this.rear = (this.front + this.count - 1) % this.queue.length;
+        return element;
+    }
+
+    @Override
+    public T first() {
+        if (this.count <= 0) {
+            throw new EmptyCollectionException("Circular Array Queue is empty");
+        }
+        return this.queue[this.front - 1];
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.count <= 0;
+    }
+
+    @Override
+    public int size() {
+        return this.count;
+    }
+
+    public int getFront() {
+        return this.front;
+    }
+
+    public int getRear() {
+        return this.rear;
+    }
+
+    public int getLength() {
+        return this.queue.length;
+    }
+
+    public String toString() {
+        if (this.count <= 0) {
+            return "The queue is empty";
+        }
+        String result = "QUEUE: ";
+
+        // iterate through the queue, starting from this.front
+        for (int i = this.front; i < this.queue.length + this.front; i++) {
+            int index = (i - 1) % this.queue.length;
+            if (this.queue[index] != null) {
+                result += this.queue[index] + ", ";
+            }
+        }
+        result = result.substring(0, result.length() - 2) + ".";
+        return result;
+    }
+
+
+    private void expandCapacity() {
+        T[] expandedQueue = (T[]) new Object[this.queue.length + 20];
+        // insert elements from old queue to new queue, staring from index 0
+        for (int i = this.front; i < this.queue.length + this.front; i++) {
+            int index = (i - 1) % this.queue.length;
+            if (this.queue[index] != null) {
+                expandedQueue[i - this.front] = this.queue[index];
+            }
+        }
+        this.queue = expandedQueue;
+        this.front = 1;
+        this.rear = this.queue.length;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * A class that implements and houses rules and methods for creating and modifying a circular array queue.
+ * @author Derek Liu
+ */
+
+public class CircularArrayQueue<T> implements QueueADT<T> {
+    private int front, rear, count;
+    private T[] queue;
+    private final int DEFAULT_CAPACITY = 20;
+
+    public CircularArrayQueue() {
+        this.front = 1;
+        this.rear = this.DEFAULT_CAPACITY;
+        this.count = 0;
+        this.queue = (T[]) (new Object[this.DEFAULT_CAPACITY]); //creates stack of size 20
+    }
+    public CircularArrayQueue(int initialcapacity) {
+        this.front = 1;
+        this.rear = initialcapacity;
+        this.count = 0;
+        this.queue = (T[]) new Object[initialcapacity];
+    }
+    /**
+     * A method that pushes the next item into the rear of queue
+     * @param newelement the item to be pushed
+     */
+    @Override
+    public void enqueue(T newelement) {
+        if (this.count >= this.queue.length) {//if queue is full, expand the capacity of the queue.
+            this.expandCapacity();
+        }
+        this.rear = (this.rear + 1) % this.queue.length; //rear returns position 1 if it's at the max capacity of queue
+        this.queue[this.rear] = newelement;
+        this.count++;
+    }
+    /**
+     * A method that removes the front item in queue
+     */
+    @Override
+    public T dequeue() throws EmptyCollectionException {
+        if(isEmpty()) {
+            throw new EmptyCollectionException("queue is empty");
+        }
+        T temp = this.queue[this.front]; //store data at front index in order to later return it
+        if (this.front == this.rear){ //if there is only 1 element in queue, front and rear goes to default
+            this.front = 1;
+            this.rear = DEFAULT_CAPACITY;
+        }
+        else{
+            this.front = (this.front + 1) % this.queue.length;
+        }
+        this.count--;
+        return temp;
+    }
+    /**
+     * A method that peeks the front item of queue
+     */
+    public T first() throws EmptyCollectionException {
+        if(isEmpty()) {
+            throw new EmptyCollectionException("queue is empty");
+        }
+        return queue[front]; //returning the element
+    }
+
+    public boolean isEmpty() {
+        return count == 0;
+    }
+
+    public int size() {
+        return count;
+    }
+
+    public int getFront() {
+        return front;
+    }
+
+    public int getRear(){
+        return rear;
+    }
+    public int getLength(){
+        return queue.length;
+    }
+    /**
+     * A method that returns all items in queue in string form
+     */
+    public String toString() {
+        if(isEmpty()) {
+            return "The queue is empty";
+        }
+        String returnoutput = "QUEUE: ";
+        int temp = front;
+        for (int i = 0; i < count; i++) { //iterates for each item in queue
+            if(i + 1 == count) {
+                returnoutput = returnoutput + queue[temp] + "."; //if item is the last one, add a period
+                break;
+            }
+            returnoutput = returnoutput + queue[temp] + ", ";
+            temp = (temp + 1) % queue.length;
+        }
+        return returnoutput;
+    }
+    /**
+     * A method that expands the queue capacity by 20
+     */
+    private void expandCapacity() {
+        T[] biggerarray = (T[]) (new Object[queue.length+20]); //creates new queue that is 20 bigger
+        int frontindex = front - 1;
+        for (int i = 0; i < count; i++) { //copies previous info into new one
+            biggerarray[frontindex] = queue[frontindex];
+            frontindex = (frontindex + 1) % queue.length;
+        }
+        rear = queue.length;
+        queue = biggerarray; //queue is now the new array
+    }
+}
+
+
+
+
+
+
+
